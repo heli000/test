@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+#include <set>
+using namespace std;
+
+int main()
+{
+    unordered_map<int, set<int>> mp1;
+    unordered_map<int, set<int>> mp2;
+    int res = 0;
+    int n, m; cin >> n >> m;
+    for(int i = 0; i < m; i++)
+    {
+        int a, b; cin >> a >> b;
+        if((mp1.find(a) == mp1.end() || (mp1.find(a) != mp1.end() && mp1[a].find(b) == mp1[a].end())))
+        {
+            res++;
+            mp1[a].insert(b);
+            if(mp2.find(a) != mp2.end())
+            {
+                for(auto it : mp2[a])
+                {
+                    mp1[it].insert(b);
+                }
+            }
+
+            mp2[b].insert(a);
+        }
+    }
+    cout << res << endl;
+    return 0;
+}
